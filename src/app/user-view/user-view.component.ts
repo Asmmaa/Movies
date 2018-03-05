@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
+import {User} from "../model/user";
+import {DataService} from "../dataservice.service";
 
 @Component({
   selector: 'app-user-view',
@@ -7,9 +9,38 @@ import { Component, OnInit } from '@angular/core';
 })
 export class UserViewComponent implements OnInit {
 
-  constructor() { }
+  friends: User[];
+  users: User[];
+  userChoosed: User;
+  fakeLogin: string = 'Sakura';
+  currentUser:User=undefined;
+  selectedFriend: User;
 
-  ngOnInit() {
+  constructor(public dataservice: DataService) {
+
+
+    dataservice.fetchUsers()
+      .then(users => {
+        this.users = users;
+        this.currentUser = users.find(user => user.pseudo === this.fakeLogin)
+      })
+      .then( ()=> this.details(this.currentUser))
+
+
   }
 
+  ngOnInit() {
+
+    this.details(this.currentUser);
+  }
+
+  details(user: User) {
+    this.userChoosed = user;
+
+
+    this.dataservice
+      .fetchFriends(user)
+      .then(friends => this.friends = friends)
+
+  }
 }

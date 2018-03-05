@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import {User} from "../model/user";
 
 @Component({
   selector: 'app-movie-view',
@@ -6,6 +7,11 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./movie-view.component.css']
 })
 export class MovieViewComponent implements OnInit {
+
+
+
+
+
 
   constructor() { }
 

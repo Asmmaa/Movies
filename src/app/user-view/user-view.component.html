@@ -1,3 +1,44 @@
-<p>
-  user-view works!
-</p>
+<!--<h2> User : </h2>
+<ul>
+  <li *ngFor="let user of users">
+  <li *ngFor="let user of userChoosed"> {{userChoosed.friends}}
+  </li>
+</ul>-->
+
+
+  <!--<h2> User : {{userChoosed.name}}</h2>
+  <ul>
+    <li *ngFor="let friends of userChoosed.friends"> {{friends.pseudo}}
+    </li>
+  </ul>-->
+
+
+
+
+  <h2 > User : {{currentUser}} </h2>
+
+
+<section *ngFor="let friends of currentUser.friends">
+  <ul>
+    <li  >
+{{friends.pseudo}}
+      <!-- <a href="#{{user.id}}" (click)="details(user)"> {{user.name}} </a>-->
+    </li>
+  </ul>
+</section>
+
+<!--<header *ngFor="let user of users">
+
+<h2 *ngIf = "user.pseudo == currentUser"> User : {{currentUser}} </h2>
+</header>
+
+<section *ngFor="let friend friends">
+  <ul>
+    <li details(user) >
+
+     &lt;!&ndash; <a href="#{{user.id}}" (click)="details(user)"> {{user.name}} </a>&ndash;&gt;
+    </li>
+  </ul>
+</section>-->
+
+<!--{{details(user[1])}} {{user[1].name}}-->

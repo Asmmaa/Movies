@@ -7,6 +7,7 @@ import {HttpClientModule} from "@angular/common/http";
 import {FormsModule} from "@angular/forms";
 import { UserViewComponent } from './user-view/user-view.component';
 import { MovieViewComponent } from './movie-view/movie-view.component';
+import {DataService} from "./dataservice.service";
 
 
 @NgModule({
@@ -18,7 +19,7 @@ import { MovieViewComponent } from './movie-view/movie-view.component';
   imports: [
     BrowserModule, HttpClientModule, FormsModule
   ],
-  providers: [],
+  providers: [DataService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
