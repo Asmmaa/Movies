@@ -4,6 +4,7 @@ public interface User {
 
     String getPseudo();
     String getName();
+
     int getId();
 
 }
