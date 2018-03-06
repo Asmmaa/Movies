@@ -6,37 +6,51 @@
 </ul>-->
 
 
-  <!--<h2> User : {{userChoosed.name}}</h2>
-  <ul>
-    <li *ngFor="let friends of userChoosed.friends"> {{friends.pseudo}}
-    </li>
-  </ul>-->
+<!--<h2> User : {{userChoosed.name}}</h2>
+<ul>
+  <li *ngFor="let friends of userChoosed.friends"> {{friends.pseudo}}
+  </li>
+</ul>-->
 
-<h2 > User : {{currentUser.pseudo}} </h2>
+<h2> User : {{currentUser.pseudo}} </h2>
 
-<form >
-      <button (click)="details(currentUser)"> Friends</button>
+<form>
+  <button (click)="details(currentUser)"> Friends</button>
   <br>
 
   <ul *ngFor="let friend of friends">
-
     <li>
-     {{friend.pseudo}}
+      {{friend.pseudo}}
     </li>
   </ul>
 </form>
 
 <form>
-  <input type="text" name="Movie" [(ngModel)]="createdMovie.Title" (click)="createdMovie.Title=''" (input)="findMovieFromInput()">
+  <input type="text" name="Movie" [(ngModel)]="movieTitleInput" (click)="movieTitleInput=''"
+         (input)="findMovies()">
   {{foundMovie.Title}}
 
-<!--  <ul *ngFor="let movie of favMovies">
-    <li>
-      {{movie.Title}}
-    </li>
-  </ul>-->
+  <button type="button" (click)="findMovies()">Find all</button>
 
-  <button (click)= "createMovie()" > Favorite Movie </button>
+  <div *ngFor="let movie of foundMovies">
+    <ul>
+      <li>
+        {{movie.Title}}
+      </li>
+    </ul>
+  </div>
 
+  <footer>
+    <button (click)="createMovie()"> Choose this movie</button>
+  </footer>
 </form>
+
+<div>
+  <ul *ngFor="let movie of movies">
+    <li>
+      {{movie.imdbID}}
+    </li>
+  </ul>
+
+</div>
 

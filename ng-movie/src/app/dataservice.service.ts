@@ -10,7 +10,7 @@ export class DataService {
   }
 
   fetchUsers(): Promise<User[]> {
-    let url = ('http://10.31.1.30:8080/movie/api/users/');
+    let url = ('http://10.31.1.30:8080/movies/api/users/');
 
     return this.http
       .get(url)
@@ -23,7 +23,7 @@ export class DataService {
 
   fetchFriends(user: User): Promise<User[]> {
     console.log(user.pseudo);
-    let url = ('http://10.31.1.30:8080/movie/api/users/' + user.pseudo);
+    let url = ('http://10.31.1.30:8080/movies/api/users/' + user.pseudo);
 
     return this.http
       .get(url)
@@ -33,29 +33,50 @@ export class DataService {
       })
   }
 
-  fetchTypedMovie(extract: string): Promise<Movie> {
+  fetchOMDBTypedMovie(extract: string): Promise<Movie> {
     return this.http
-      .get('http://www.omdbapi.com/?apikey=d424c139&t=' + extract)
+      .get('http://www.omdbapi.com/?apikey=d424c139&type=movie&t=' + extract)
       .toPromise()
       .then(data => {
         return data as Movie
       });
+
   }
 
-  fetchdMoviesList(extract: string): Promise<Movie[]> {
+
+  fetchMoviesOMDB(extract: string): Promise<Movie[]> {
+/*    function mapper(movie: Movie) {
+      return {
+        Search: Movie[],
+        totalResults: string,
+        Response: string
+    }
+    }*/
     return this.http
       .get('http://www.omdbapi.com/?apikey=d424c139&s=' + extract)
       .toPromise()
+      // .then(internetMovie => (internetMovie as any).map(mapper))
       .then(data => {
         return data as Movie[]
       });
   }
 
+  fetchFavoriteMovies(user: User): Promise<Movie[]> {
+    let url = ('http://10.31.1.30:8080/movies/api/fav_movies/' + user.id);
+
+    return this.http
+      .get(url)
+      .toPromise()
+      .then(data => {
+        return data as Movie[];
+      })
+  }
+
+
   createFavMovie(movie: Movie) {
-    console.log(movie.user.pseudo)
-    let url = 'http://10.31.1.30:8080/movie/api/fav_movies';
+    let url = 'http://10.31.1.30:8080/movies/api/fav_movies';
     let dto = {
-      imDbId: movie.imdbId,
+      imDbId: movie.imdbID,
       title: movie.Title,
       user: movie.user
     }
