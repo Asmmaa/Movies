@@ -1,5 +1,6 @@
 package io.pax.movie.dao;
 
+import io.pax.movie.model.FavMovie;
 import io.pax.movie.model.Movie;
 
 import java.sql.*;
@@ -33,17 +34,59 @@ public class MovieDao {
    }
 
    public List<Movie> findMovies() throws SQLException {
+
        List<Movie> movies = new ArrayList<>();
+
+
+       String query = "SELECT * FROM movie";
        Connection conn = this.connector.getConnection();
-       Statement stmt = conn.createStatement();
-       //ResultSet rs = stmt.executeQuery();
-       return null;
+       PreparedStatement stmt = conn.prepareStatement(query);
+       ResultSet rs = stmt.executeQuery();
 
+       while (rs.next()) {
+           String title = rs.getString("title");
+           String imDbId = rs.getString("imdbId");
+           int id = rs.getInt("id");
+           //int user_id = rs.getInt("user_id");
 
+           movies.add(new FavMovie(id, title, imDbId));
+       }
+       rs.close();
+       stmt.close();
+       conn.close();
+
+       return movies;
    }
+
+    public List<Movie> findMoviesByUserId(int userId) throws SQLException {
+
+        String query = "SELECT * FROM movie WHERE user_id=?";
+        List<Movie> moviesId = new ArrayList<>();
+
+        Connection conn = this.connector.getConnection();
+        PreparedStatement stmt = conn.prepareStatement(query);
+        stmt.setInt(1, userId);
+        ResultSet rs = stmt.executeQuery();
+
+        while (rs.next()) {
+            String title = rs.getString("title");
+            String imDbId = rs.getString("imdbid");
+            int id = rs.getInt("id");
+
+
+            moviesId.add(new FavMovie(id, title, imDbId));
+        }
+        rs.close();
+        stmt.close();
+        conn.close();
+
+        return moviesId;
+    }
 
     public static void main(String[] args) throws SQLException {
         MovieDao dao = new MovieDao();
-        System.out.println(dao.createMovie("1J5857", "Star Wars", 5));
+       // System.out.println(dao.createMovie("1J5857", "Star Wars", 5));
+       dao.findMovies();
+//        dao.findMoviesByUserId(4);
     }
 }
