@@ -1,0 +1,42 @@
+<!--<h2> User : </h2>
+<ul>
+  <li *ngFor="let user of users">
+  <li *ngFor="let user of userChoosed"> {{userChoosed.friends}}
+  </li>
+</ul>-->
+
+
+  <!--<h2> User : {{userChoosed.name}}</h2>
+  <ul>
+    <li *ngFor="let friends of userChoosed.friends"> {{friends.pseudo}}
+    </li>
+  </ul>-->
+
+<h2 > User : {{currentUser.pseudo}} </h2>
+
+<form >
+      <button (click)="details(currentUser)"> Friends</button>
+  <br>
+
+  <ul *ngFor="let friend of friends">
+
+    <li>
+     {{friend.pseudo}}
+    </li>
+  </ul>
+</form>
+
+<form>
+  <input type="text" name="Movie" [(ngModel)]="createdMovie.Title" (click)="createdMovie.Title=''" (input)="findMovieFromInput()">
+  {{foundMovie.Title}}
+
+<!--  <ul *ngFor="let movie of favMovies">
+    <li>
+      {{movie.Title}}
+    </li>
+  </ul>-->
+
+  <button (click)= "createMovie()" > Favorite Movie </button>
+
+</form>
+
