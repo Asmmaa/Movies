@@ -80,12 +80,6 @@ export class UserViewComponent implements OnInit {
       .then(() => this.displayMovie(this.currentUser))
   }
 
-  findMovieFromInput() {
-    return this.dataservice.fetchOMDBTypedMovie(this.movieTitleInput)
-      .then(mov => this.foundMovie = mov)
-      .then(mov => console.log('Found : ', mov))
-  }
-
   findOMDBMovies() {
     return this.dataservice.fetchMoviesOMDB(this.movieTitleInput)
       .then(movs => this.foundMovies = (movs as any).Search)
@@ -97,7 +91,6 @@ export class UserViewComponent implements OnInit {
     this.selectedMovie.user = this.currentUser;
     this.dataservice
       .createFavMovie(this.selectedMovie)
-      // .then(() => this.currentUser.movies.push(Object.assign({},this.selectedMovie)))
       .then(() => this.moviePopupOut())
       .catch(e => alert(e.message));
   }
