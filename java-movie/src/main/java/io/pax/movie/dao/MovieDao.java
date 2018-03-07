@@ -34,9 +34,7 @@ public class MovieDao {
    }
 
    public List<Movie> findMovies() throws SQLException {
-
        List<Movie> movies = new ArrayList<>();
-
 
        String query = "SELECT * FROM movie";
        Connection conn = this.connector.getConnection();

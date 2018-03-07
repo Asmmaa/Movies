@@ -1,6 +1,14 @@
-body{
-  background-image: url(../assets/movie.jpg);
-  background-repeat: no-repeat;
-  background-size: cover;
+header h1.AppName {
+  font-family: "Agency FB";
+  color: rgba(0, 41, 255, 0.8);
+  margin-left: 25px;
+  padding: 0%;
+  font-size: 80px;
 }
+
+header #Applogo {
+  height: 100px;
+  opacity: 0.8;
+}
+
 

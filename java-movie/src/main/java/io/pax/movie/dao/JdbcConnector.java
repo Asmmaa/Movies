@@ -17,7 +17,7 @@ public class JdbcConnector {
         try {
             Context context = new InitialContext();
             dataSource = (DataSource) context.lookup("java:/movie");
-            System.out.println("From Datasource");
+            System.out.println("Connection from Datasource");
         } catch (NamingException e) {
             MysqlDataSource mysqlDataSource = new MysqlDataSource();
             mysqlDataSource.setUser("root");
@@ -26,6 +26,7 @@ public class JdbcConnector {
             mysqlDataSource.setDatabaseName("movies");
             mysqlDataSource.setPort(3306);
             dataSource = mysqlDataSource;
+            System.out.println("New connection");
         }
         return dataSource;
 

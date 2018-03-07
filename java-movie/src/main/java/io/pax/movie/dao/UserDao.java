@@ -32,6 +32,7 @@ public class UserDao {
         return users;
     }
 
+
     public List<User> listFriendsByPseudo(String pseudo) throws SQLException {
 
         List<User> friends = new ArrayList<>();
@@ -48,7 +49,6 @@ public class UserDao {
             int id = rs.getInt("id");
             friends.add(new FilmFan(id, name, friendPseudo));
         }
-
         rs.close();
         stmt.close();
         conn.close();
@@ -56,9 +56,32 @@ public class UserDao {
         return friends;
     }
 
+    public int insertFriend(String current, String friend) throws SQLException {
+        String query = "INSERT INTO friend (friend_id, user_id)\n" +
+                "SELECT (SELECT id FROM user WHERE pseudo=?) as friend_id, (SELECT id FROM user WHERE pseudo=?) as user_id";
+        Connection conn = this.connector.getConnection();
+        PreparedStatement stmt = conn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
+
+        stmt.setString(1,friend);
+        stmt.setString(2,current);
+        stmt.execute();
+
+        ResultSet key = stmt.getGeneratedKeys();
+        key.next();
+
+        int id = key.getInt(1);
+
+        stmt.close();
+        conn.close();
+
+        return id;
+    }
+
     public static void main(String[] args) throws SQLException {
         UserDao dao = new UserDao();
         System.out.println(dao.listFriendsByPseudo("Litchix"));
         System.out.println(dao.listUsers());
+
+        System.out.println(dao.insertFriend("Sephiroth","Slidie"));
     }
 }

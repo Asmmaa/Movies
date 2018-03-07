@@ -1,6 +1,7 @@
 package io.pax.movie.ws;
 
 import io.pax.movie.dao.UserDao;
+import io.pax.movie.model.FilmFan;
 import io.pax.movie.model.User;
 
 import javax.ws.rs.*;
@@ -26,4 +27,18 @@ public class UserWs {
         return dao.listFriendsByPseudo(pseudo);
     }
 
+    @POST
+    public void addAFriend(List<FilmFan> currents){
+        if (currents.size()==2) {
+            System.out.println("OK");
+        }
+        String pseudoCurrent = currents.get(0).getPseudo();
+        String pseudoFriend = currents.get(1).getPseudo();
+
+        try {
+            int id = new UserDao().insertFriend(pseudoCurrent, pseudoFriend);
+        } catch (SQLException e) {
+            throw new ServerErrorException("Database error", 500);
+        }
+    }
 }

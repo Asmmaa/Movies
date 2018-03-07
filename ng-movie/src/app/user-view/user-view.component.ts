@@ -15,10 +15,13 @@ export class UserViewComponent implements OnInit {
   users: User[];
   fakeLogin: string = 'Sakura';
   currentUser: User = new User();
-  favMovies: Movie[] = [];
+  foundMovies: Movie[] = [];
   createdMovie = new Movie();
   foundMovie = new Movie();
-  selectedMovie: Movie = new Movie();
+  hoverEdit: boolean;
+  movies: Movie[];
+  selectedFriend: User;
+  movieTitleInput: string;
 
   constructor(public dataservice: DataService) {
 
@@ -26,13 +29,19 @@ export class UserViewComponent implements OnInit {
       .then(users => {
         this.users = users
         this.currentUser = users.find(user => user.pseudo === this.fakeLogin)
-        console.log(this.currentUser)
       })
-
     .then(() => this.details(this.currentUser))
+      .then(() => this.displayMovie(this.currentUser))
   }
 
   ngOnInit() {
+  }
+
+  hoverIn(){
+    this.hoverEdit = true;
+  }
+  hoverOut(){
+    this.hoverEdit = false;
   }
 
   details(user: User){
@@ -44,16 +53,28 @@ export class UserViewComponent implements OnInit {
       })
   }
 
+
+  details2(user: User){
+    this.selectedFriend = user;
+    this.currentUser = user;
+    this.dataservice
+      .fetchFriends(user)
+      .then(friends => {
+        this.friends = friends
+      })
+  }
+
   findMovieFromInput() {
-    return this.dataservice.fetchTypedMovie(this.createdMovie.Title)
+    return this.dataservice.fetchOMDBTypedMovie(this.movieTitleInput)
       .then(mov => this.foundMovie = mov)
       .then(mov => console.log('Found : ', mov))
   }
 
-  findMovies() {
-    return this.dataservice.fetchdMoviesList(this.createdMovie.Title)
-      .then(movs => this.favMovies = movs)
+  findOMDBMovies() {
+    return this.dataservice.fetchMoviesOMDB(this.movieTitleInput)
+      .then(movs => this.foundMovies = (movs as any).Search)
       .then(movs => console.log('Found : ', movs))
+      .catch(e => alert(e.message));
   }
 
   createMovie(){
@@ -62,6 +83,15 @@ export class UserViewComponent implements OnInit {
       .createFavMovie(this.foundMovie)
       .then(() => this.currentUser.movies.push(Object.assign({},this.foundMovie)))
       .catch(e => alert(e.message));
+  }
+
+  displayMovie(user: User) {
+    this.dataservice
+      .fetchFavoriteMovies(user)
+      .then(movies =>{
+        this.movies = movies
+        console.log(movies)
+      })
   }
 
 }
