@@ -14,21 +14,47 @@
     </div>
   </section>
 
-
   <form class="add">
-    <input type="text" name="Movie" [(ngModel)]="movieTitleInput" (click)="movieTitleInput=''"
+    Search a Movie : <input type="text" name="Movie" [(ngModel)]="movieTitleInput" (click)="movieTitleInput=''"
            (input)="findOMDBMovies()">
     <div *ngFor="let movie of foundMovies">
       <ul>
         <li>
-          {{movie.Title}}
+          <a href="#{{movie.imdbID}}" (click)="moviePopupIn(movie)">
+            {{movie.Title}}
+          </a>
         </li>
       </ul>
 
     </div>
     {{foundMovie.Title}}
-
-    <button (click)="createMovie()"> Favorite Movie</button>
   </form>
+
+
+
+  <!-- Confirmation Popup to Like a movie -->
+
+  <div *ngIf="popupEdit" class="modal-box outer ">
+    <div class="modal-box inner">
+      <header>
+        <h2>Ajout d'un film</h2>
+      </header>
+      <div class="inner-content">
+        <!--Message goes here-->
+        Etes vous sûr de vouloir ajouter :
+        <span class="filmDescription">{{selectedMovie.Title}}</span>
+        ?
+      </div>
+      <div class="inner-buttons">
+        <button class="btn btn-success" type="button" (click)="createMovie()">
+          Ajouter
+        </button>
+        <button class="btn btn-primray" type="button" (click)="moviePopupOut()">
+          Annuler
+        </button>
+      </div>
+    </div>
+  </div>
+  <!-- Confirmation Popup to Like a movie -->
 
 </main>

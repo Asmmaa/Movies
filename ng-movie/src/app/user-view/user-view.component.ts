@@ -19,7 +19,9 @@ export class UserViewComponent implements OnInit {
   createdMovie = new Movie();
   foundMovie = new Movie();
   hoverEdit: boolean;
-  movies: Movie[];
+  popupEdit: boolean;
+  movies: Movie[] = [];
+  selectedMovie: Movie = new Movie();
   selectedFriend: User;
   movieTitleInput: string;
 
@@ -37,12 +39,24 @@ export class UserViewComponent implements OnInit {
   ngOnInit() {
   }
 
+/* ******************  Dynamic Displays ************************ */
+
   hoverIn(){
     this.hoverEdit = true;
   }
   hoverOut(){
     this.hoverEdit = false;
   }
+  moviePopupIn(movie: Movie) {
+    this.selectedMovie = movie;
+    this.popupEdit = true
+  }
+
+  moviePopupOut() {
+    this.popupEdit = false
+  }
+
+  /* ******************  Dynamic Displays ************************ */
 
   details(user: User){
     this.dataservice
@@ -52,7 +66,6 @@ export class UserViewComponent implements OnInit {
          this.friends = friends
       })
   }
-
 
   details2(user: User){
     this.selectedFriend = user;
@@ -78,10 +91,11 @@ export class UserViewComponent implements OnInit {
   }
 
   createMovie(){
-    this.foundMovie.user = this.currentUser;
+    this.selectedMovie.user = this.currentUser;
     this.dataservice
-      .createFavMovie(this.foundMovie)
-      .then(() => this.currentUser.movies.push(Object.assign({},this.foundMovie)))
+      .createFavMovie(this.selectedMovie)
+     // .then(() => this.currentUser.movies.push(Object.assign({},this.selectedMovie)))
+      .then(() => this.moviePopupOut())
       .catch(e => alert(e.message));
   }
 

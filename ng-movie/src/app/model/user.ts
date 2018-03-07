@@ -5,5 +5,5 @@ export class User {
   id: number;
   pseudo: string;
   friends: User[];
-  movies: Movie[];
+  movies: Movie[] = [];
 }

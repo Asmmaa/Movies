@@ -12,9 +12,71 @@
 }
 
 .add{
-  background: blue;
   margin-left: 100px;
 }
+
+/* Popup for movie */
+
+.modal-box.outer{
+  position: fixed;
+  z-index: 0;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  background-color: rgba(119,119,119, 0.5);
+}
+
+.modal-box.inner{
+  position: absolute;
+  z-index: -1;
+  top: 30%;
+  left: 40%;
+  width: 300px;
+  height: 200px;
+  background-color: #fff;
+  color: #000;
+  box-shadow: 3px 3px 3px rgba(128,128,128, 0.9);
+  border-radius: 3px;
+}
+
+.modal-box.outer header{
+  border-bottom: 1px solid black;
+  text-align: center;
+}
+
+
+.modal-box.outer .inner-buttons{
+  position: absolute;
+  bottom: 0;
+  padding-left: 30%;
+  padding-bottom:  1.5em;
+}
+
+.modal-box.outer .inner-buttons button{
+  margin-right:  1em;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 /*.submenu {
   display: none;
   background: rgba(54, 25, 25, .3);
