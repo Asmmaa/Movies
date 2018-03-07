@@ -1,9 +1,10 @@
 <main id="main">
 
+  <!--  ************************** Left Column **************************-->
   <section class="leftCol">
-    <h2>{{currentUser.pseudo}}</h2>
+    <h2 id="currentPseudo">{{currentUser.pseudo}}</h2>
 
-    <span class="friendScroll" (click)="hoverIn()"  role="button"
+    <span class="friendScroll" (click)="hoverIn()" role="button"
           title="friends">Friends</span>
     <div *ngIf="hoverEdit">
       <ul class="submenu" *ngFor="let friend of friends">
@@ -13,10 +14,37 @@
       </ul>
     </div>
   </section>
+  <!--  ************************** Left Column **************************-->
+
+  <!--  ************************** Display Movies **************************-->
+
+  <form Kenza>
+    <br>
+    My Favorites Movies:
+    <ul id="kenzaMovieUl">
+      <li *ngFor="let movie of movies" id="kenzaMovieLi"><a href="#info" (click)="displayInformation(movie)">
+        {{movie.title}}
+      </a>
+      </li>
+    </ul>
+
+    {{movieInfo.Year}} <br>
+    {{movieInfo.Rated}}<br>
+    {{movieInfo.Language}}<br>
+    {{movieInfo.Plot}}<br>
+    {{movieInfo.Genre}}<br>
+    <img src="{{ movieInfo.Poster}}">
+    <!--  <img src = {{ movieInfo.Poster}}>-->
+  </form>
+
+  <!--  ****************************** Display Movies **************************-->
+
+  <!--  ********************************* Add forms ****************************-->
+  <!--  ************************** Movie **************************-->
 
   <form class="add">
     Search a Movie : <input type="text" name="Movie" [(ngModel)]="movieTitleInput" (click)="movieTitleInput=''"
-           (input)="findOMDBMovies()">
+                            (input)="findOMDBMovies()">
     <div *ngFor="let movie of foundMovies">
       <ul>
         <li>
@@ -30,7 +58,11 @@
     {{foundMovie.Title}}
   </form>
 
-
+  <!--  ************************** Movie **************************-->
+  <!--  ************************** Friend **************************-->
+  <!--Asmaa-->
+  <!--  ************************** Friend **************************-->
+  <!--  ********************************* Add forms ****************************-->
 
   <!-- Confirmation Popup to Like a movie -->
 

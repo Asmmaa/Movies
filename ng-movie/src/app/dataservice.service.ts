@@ -71,4 +71,14 @@ export class DataService {
       .toPromise()
       .then(console.log);
   }
+
+  fetchOMDBimDbId(movieId: string): Promise<Movie> {
+    console.log(movieId);
+    return this.http
+      .get('http://www.omdbapi.com/?apikey=d424c139&type=movie&i=' + movieId)
+      .toPromise()
+      .then(data => {
+        return data as Movie;
+      });
+  }
 }

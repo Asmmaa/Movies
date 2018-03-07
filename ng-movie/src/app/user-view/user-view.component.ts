@@ -23,6 +23,7 @@ export class UserViewComponent implements OnInit {
   movies: Movie[] = [];
   selectedMovie: Movie = new Movie();
   selectedFriend: User;
+  movieInfo: Movie = new Movie();
   movieTitleInput: string;
 
   constructor(public dataservice: DataService) {
@@ -32,21 +33,23 @@ export class UserViewComponent implements OnInit {
         this.users = users
         this.currentUser = users.find(user => user.pseudo === this.fakeLogin)
       })
-    .then(() => this.details(this.currentUser))
+      .then(() => this.details(this.currentUser))
       .then(() => this.displayMovie(this.currentUser))
   }
 
   ngOnInit() {
   }
 
-/* ******************  Dynamic Displays ************************ */
+  /* ******************  Dynamic Displays ************************ */
 
-  hoverIn(){
+  hoverIn() {
     this.hoverEdit = true;
   }
-  hoverOut(){
+
+  hoverOut() {
     this.hoverEdit = false;
   }
+
   moviePopupIn(movie: Movie) {
     this.selectedMovie = movie;
     this.popupEdit = true
@@ -58,16 +61,15 @@ export class UserViewComponent implements OnInit {
 
   /* ******************  Dynamic Displays ************************ */
 
-  details(user: User){
+  details(user: User) {
     this.dataservice
       .fetchFriends(user)
       .then(friends => {
-
-         this.friends = friends
+        this.friends = friends
       })
   }
 
-  details2(user: User){
+  details2(user: User) {
     this.selectedFriend = user;
     this.currentUser = user;
     this.dataservice
@@ -75,6 +77,7 @@ export class UserViewComponent implements OnInit {
       .then(friends => {
         this.friends = friends
       })
+      .then(() => this.displayMovie(this.currentUser))
   }
 
   findMovieFromInput() {
@@ -90,22 +93,32 @@ export class UserViewComponent implements OnInit {
       .catch(e => alert(e.message));
   }
 
-  createMovie(){
+  createMovie() {
     this.selectedMovie.user = this.currentUser;
     this.dataservice
       .createFavMovie(this.selectedMovie)
-     // .then(() => this.currentUser.movies.push(Object.assign({},this.selectedMovie)))
+      // .then(() => this.currentUser.movies.push(Object.assign({},this.selectedMovie)))
       .then(() => this.moviePopupOut())
       .catch(e => alert(e.message));
   }
 
   displayMovie(user: User) {
+    this.currentUser = user;
     this.dataservice
       .fetchFavoriteMovies(user)
-      .then(movies =>{
+      .then(movies => {
         this.movies = movies
         console.log(movies)
       })
+  }
+
+  displayInformation(movie: Movie) {
+    this.selectedMovie = movie;
+    console.log(movie.imDbId);
+    this.dataservice.fetchOMDBimDbId(movie.imDbId)
+      .then(info => this.movieInfo = info)
+      .then(info => console.log('Information : ', info))
+      .catch(e => alert(e.message));
   }
 
 }

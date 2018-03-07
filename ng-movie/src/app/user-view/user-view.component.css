@@ -6,9 +6,17 @@
 .leftCol {
   flex-direction: column;
   display: flex;
-  background: #262a54;
+  background : rgba(38,42,84,0.5);
   color: white;
   flex: 0.5 1;
+}
+
+#currentPseudo{
+  margin-left: 10px;
+}
+
+.friendScroll{
+  margin-left: 45px;
 }
 
 .add{
@@ -57,7 +65,15 @@
   margin-right:  1em;
 }
 
+#kenzaMovieLi {
+  background: rgb(230,237,243);
+  padding: 20px;
+}
 
+#kenzaMovieUl {
+  background: #ffc72f;
+  padding: 20px;
+}
 
 
 
