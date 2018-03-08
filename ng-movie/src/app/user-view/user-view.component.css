@@ -3,12 +3,14 @@
   background-color: rgba(167, 167, 178, 0.6);
 }
 
+/*************************Left colone : Friend list************************/
+
 .leftCol {
   flex-direction: column;
   display: flex;
   background: rgba(38, 42, 84, 0.5);
   color: white;
-  flex: 0.5 1;
+/*  flex: 0 0 0;*/
   border-radius: 16px;
 }
 
@@ -46,10 +48,55 @@
   list-style-type:none;
 }
 
+/*************************Third colone : Add a Movie ************************/
+
 .add {
+  font-size: 100%;
   margin-left: 50px;
   font-family: Lucida Console;
   background-color: rgba(119, 119, 119, 0.5);
+  border-radius: 15px;
+  position: static;
+}
+
+.search{
+  font-size: 150%;
+  margin-bottom: 50px;
+}
+
+.input input[type=text] {
+  float: right;
+  padding: 6px;
+  margin-top: 8px;
+  margin-right: 16px;
+  border: none;
+  font-size: 17px;
+}
+
+#listM1{
+  border-left: 18px solid #0a0e55;
+  padding: 10px 20px;
+  padding-left: -50px;
+  margin-left: 1px;
+}
+
+#listM2 {
+  list-style-type: none;
+  margin-left: -50px;
+  margin-bottom: -20px;
+  text-decoration: none;
+  font-weight: bold;
+  font-family: Calibri;
+  font-size: 120%;
+}
+
+#movieLine:link{
+  color: #0a0e55;
+  text-decoration: none;
+}
+
+#movieLine:visited{
+  color: #0a0e55;
 }
 
 .addF{
@@ -58,7 +105,7 @@
   background-color: rgba(119, 119, 119, 0.5);
 }
 
-/* Popup for movie */
+/************* Popup for movie ****************/
 
 .modal-box.outer {
   position: fixed;
@@ -122,8 +169,22 @@
   padding: 10px 20px;
 }
 
-.div1 {
+/*************************Main colone : Movies list************************/
+
+.div1::-webkit-scrollbar {
+  display: flex;
+  width:10px;
   margin: 20px;
+  overflow-y: scroll;
+  flex-direction: column;
+  flex: 1 0 0;
+}
+
+#favMov{
+  margin-left: 10px;
+  font-family: "Agency FB";
+  color: rgba(10, 14, 85, 0.8);
+  font-size: 50px;
 }
 
 .ul1 {
@@ -169,28 +230,3 @@ li:hover {
 
 
 
-
-
-
-
-
-
-
-/*.submenu {
-  display: none;
-  background: rgba(54, 25, 25, .3);
-  -webkit-transition: background 1.5s ease-out;
-  -moz-transition: background 1.5s ease-out;
-  -o-transition: background 1.5s ease-out;
-  transition: background 1.5s ease-out;
-}
-
-.submenu:hover{
-  background: rgba(180,42,42,1);
-}
-
-li:hover .submenu{
-  display: block;
-  position: fixed;
-  padding: 0px;
-}*/

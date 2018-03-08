@@ -13,7 +13,7 @@ import {Infos} from "../model/infos";
 export class UserViewComponent implements OnInit {
 
   users: User[];
-  fakeLogin: string = 'Feyribran';
+  fakeLogin: string = 'Sakura';
   currentUser: User = new User();
   foundMovies: Movie[] = [];
   foundMovie = new Movie();

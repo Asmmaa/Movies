@@ -1,3 +1,5 @@
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
 <main id="main">
 
   <!--  ************************** Left Column **************************-->
@@ -13,15 +15,25 @@
         </li>
       </ul>
     </div>
+
+    <form>
+      <span (mouseover)="findFriends()"> Search friends :</span>
+      <ul>
+        <li *ngFor="let friend of foundFriends">
+          <span class="friendchoice" (click)="addFriend(friend)">{{friend.pseudo}}</span>
+        </li>
+      </ul>
+    </form>
   </section>
   <!--  ************************** Left Column **************************-->
 
   <!--  ************************** Display Movies **************************-->
 
-  <!--  <div class="div1">
-      <ul class="ul1">
+    <div class="div1" style= "overflow-y: scroll;">
+      <span id="favMov"> Favorite Movies </span>
+      <ul class="ul1" style= "overflow-y: scroll; height: 600px">
         <li class="li1" *ngFor="let movie of currentUser.movies">
-            <img src="{{movie.infos.Poster}}" />
+            <img src="{{movie.infos.Poster}}" style="width:200px;height:300px;"/>
             <h3 class="title">{{movie.infos.Title}}</h3>
           <span>Genre:</span> {{movie.infos.Genre}}<br>
           <span>Year of release:</span> {{movie.infos.Year}}<br>
@@ -31,31 +43,30 @@
           <p>{{movie.infos.Plot}}</p>
         </li>
       </ul>
-    </div>-->
+    </div>
   <!--  ****************************** Display Movies **************************-->
 
   <!--  ********************************* Add forms ****************************-->
   <!--  ************************** Movie **************************-->
 
-  <form class="add">
-    Search a Movie : <input type="text" name="Movie" [(ngModel)]="movieTitleInput" (click)="movieTitleInput=''"
+  <div class="add">
+    <span class="search" > Search a Movie : </span>
+    <input class="input" type="text" placeholder="Search..." name="Movie" [(ngModel)]="movieTitleInput" (click)="movieTitleInput=''"
                             (input)="findOMDBMovies()">
-    <div *ngFor="let movie of foundMovies">
+    <div *ngFor="let movie of foundMovies" id = "listM1">
       <ul>
-        <li>
-          <a href="#{{movie.imdbID}}" (click)="moviePopupIn(movie)">
+        <li id = "listM2">
+          <a href="#{{movie.imdbID}}" (click)="moviePopupIn(movie)" id = "movieLine">
             {{movie.Title}}
           </a>
         </li>
       </ul>
-
     </div>
     {{foundMovie.Title}}
-  </form>
+  </div>
 
   <!--  ************************** Movie **************************-->
   <!--  ************************** Friend **************************-->
-  <form>
     <!--    <div>
           Search friends :
           <select name="friends" (change)="addFriend(this)">
@@ -65,15 +76,7 @@
             Add
           </button>
         </div>-->
-  </form>
-  <form>
-    <span (mouseover)="findFriends()"> Search friends :</span>
-    <ul>
-      <li *ngFor="let friend of foundFriends">
-      <span class="friendchoice" (click)="addFriend(friend)">{{friend.pseudo}}</span>
-      </li>
-    </ul>
-  </form>
+
   <!--  ************************** Friend **************************-->
   <!--  ********************************* Add forms ****************************-->
 
@@ -94,7 +97,7 @@
         <button class="btn btn-success" type="button" (click)="createMovie()">
           Ajouter
         </button>
-        <button class="btn btn-primray" type="button" (click)="moviePopupOut()">
+        <button class="btn btn-warning" type="button" (click)="moviePopupOut()">
           Annuler
         </button>
       </div>
