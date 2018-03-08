@@ -72,5 +72,16 @@ export class DataService {
       .then(console.log);
   }
 
+  createFriends(user: User, friend: User) {
+    console.log("OK");
+    let url = 'http://10.31.1.30:8080/movies/api/users';
+    let dto = [{
+      pseudo: user.pseudo,
+    },{
+      pseudo : friend.pseudo
+    }]
+    return this.http.post(url, dto)
+      .toPromise()
+  }
 
 }

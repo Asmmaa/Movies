@@ -13,7 +13,7 @@ import {Infos} from "../model/infos";
 export class UserViewComponent implements OnInit {
 
   users: User[];
-  fakeLogin: string = 'Sakura';
+  fakeLogin: string = 'Feyribran';
   currentUser: User = new User();
   foundMovies: Movie[] = [];
   foundMovie = new Movie();
@@ -22,6 +22,7 @@ export class UserViewComponent implements OnInit {
   selectedMovie: Movie = new Movie();
   selectedFriend: User;
   movieTitleInput: string;
+  foundFriends: User[] = [];
 
   constructor(public dataservice: DataService) {
 
@@ -142,7 +143,23 @@ export class UserViewComponent implements OnInit {
       .catch(e => alert(e.message));
   }
 
+  addFriend(friend: User) {
+    console.log(friend)
+    this.dataservice
+      .createFriends(this.currentUser, friend)
+      .then(console.log)
+      .catch(e => alert(e.message));
+  }
+
   /* ******************  ADD methods ************************ */
+
+  findFriends() {
+    return this.dataservice.fetchDBUsers()
+      .then(users => this.foundFriends = users.filter(filtered => filtered.pseudo !== this.currentUser.pseudo)
+  )
+  .then(console.log)
+  }
+
 }
 
 

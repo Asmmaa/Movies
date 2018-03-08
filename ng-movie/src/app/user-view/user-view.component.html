@@ -18,20 +18,20 @@
 
   <!--  ************************** Display Movies **************************-->
 
-  <div class="div1">
-    <ul class="ul1">
-      <li class="li1" *ngFor="let movie of currentUser.movies">
-          <img src="{{movie.infos.Poster}}" style="width:200px;height:300px;"/>
-          <h3 class="title">{{movie.infos.Title}}</h3>
-        <span>Genre:</span> {{movie.infos.Genre}}<br>
-        <span>Year of release:</span> {{movie.infos.Year}}<br>
-        <span>Rated:</span> {{movie.infos.Rated}}<br>
-        <span>Language:</span> {{movie.infos.Language}}<br>
-        <span>Synopsis:</span>
-        <p>{{movie.infos.Plot}}</p>
-      </li>
-    </ul>
-  </div>
+  <!--  <div class="div1">
+      <ul class="ul1">
+        <li class="li1" *ngFor="let movie of currentUser.movies">
+            <img src="{{movie.infos.Poster}}" />
+            <h3 class="title">{{movie.infos.Title}}</h3>
+          <span>Genre:</span> {{movie.infos.Genre}}<br>
+          <span>Year of release:</span> {{movie.infos.Year}}<br>
+          <span>Rated:</span> {{movie.infos.Rated}}<br>
+          <span>Language:</span> {{movie.infos.Language}}<br>
+          <span>Synopsis:</span>
+          <p>{{movie.infos.Plot}}</p>
+        </li>
+      </ul>
+    </div>-->
   <!--  ****************************** Display Movies **************************-->
 
   <!--  ********************************* Add forms ****************************-->
@@ -55,7 +55,25 @@
 
   <!--  ************************** Movie **************************-->
   <!--  ************************** Friend **************************-->
-  <!--Asmaa-->
+  <form>
+    <!--    <div>
+          Search friends :
+          <select name="friends" (change)="addFriend(this)">
+            <option *ngFor="let user of users" [value]="user.pseudo" (change)="addFriend(user)">{{user.pseudo}} > </option>
+          </select>
+          <button class="btn btn-success" type="button">
+            Add
+          </button>
+        </div>-->
+  </form>
+  <form>
+    <span (mouseover)="findFriends()"> Search friends :</span>
+    <ul>
+      <li *ngFor="let friend of foundFriends">
+      <span class="friendchoice" (click)="addFriend(friend)">{{friend.pseudo}}</span>
+      </li>
+    </ul>
+  </form>
   <!--  ************************** Friend **************************-->
   <!--  ********************************* Add forms ****************************-->
 

@@ -32,8 +32,8 @@ public class UserWs {
         if (currents.size()==2) {
             System.out.println("OK");
         }
-        String pseudoCurrent = currents.get(0).getPseudo();
-        String pseudoFriend = currents.get(1).getPseudo();
+        String pseudoFriend = currents.get(0).getPseudo();
+        String pseudoCurrent = currents.get(1).getPseudo();
 
         try {
             int id = new UserDao().insertFriend(pseudoCurrent, pseudoFriend);
