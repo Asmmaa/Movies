@@ -1,41 +1,76 @@
-
 #main {
   display: flex;
+  background-color: rgba(167, 167, 178, 0.6);
 }
 
 .leftCol {
   flex-direction: column;
   display: flex;
-  background : rgba(38,42,84,0.5);
+  background: rgba(38, 42, 84, 0.5);
   color: white;
   flex: 0.5 1;
+  border-radius: 16px;
 }
 
-#currentPseudo{
+#currentPseudo {
+  margin-left: 30px;
+  font-family: Lucida Console;
+  font-size: 35px;
+}
+
+.friendScroll {
+  margin-left: 45px;
+  margin-bottom: 15px;
+  font-family: Lucida Console;
+  background-color: #ebe8df;
+  color: rgba(10, 14, 85, 0.8);
+  padding-left: 1%;
+  border: 5px rgba(10, 14, 85, 0.8);
+  padding:  0em 1em;
+  border-radius: 16px;
+  font-size: 24px;
+  line-height: 2;
+  margin-right: 90px;
+}
+
+#listF{
+  border-left: 20px solid #0a0e55;
+  list-style-type: none;
+  padding: 10px 20px;
   margin-left: 10px;
 }
 
-.friendScroll{
-  margin-left: 45px;
+.submenu {
+  font-family: Lucida Console;
+  margin-left: -48px;
+  list-style-type:none;
 }
 
-.add{
-  margin-left: 100px;
+.add {
+  margin-left: 50px;
+  font-family: Lucida Console;
+  background-color: rgba(119, 119, 119, 0.5);
+}
+
+.addF{
+  margin-left: 50px;
+  font-family: Lucida Console;
+  background-color: rgba(119, 119, 119, 0.5);
 }
 
 /* Popup for movie */
 
-.modal-box.outer{
+.modal-box.outer {
   position: fixed;
   z-index: 0;
   top: 0;
   left: 0;
   height: 100%;
   width: 100%;
-  background-color: rgba(119,119,119, 0.5);
+  background-color: rgba(119, 119, 119, 0.5);
 }
 
-.modal-box.inner{
+.modal-box.inner {
   position: absolute;
   z-index: -1;
   top: 30%;
@@ -43,42 +78,90 @@
   width: 300px;
   height: 200px;
   background-color: #fff;
-  color: #000;
-  box-shadow: 3px 3px 3px rgba(128,128,128, 0.9);
+  color: #0a0e55;
+  box-shadow: 3px 3px 3px rgba(128, 128, 128, 0.9);
   border-radius: 3px;
 }
 
-.modal-box.outer header{
+.modal-box.outer header {
   border-bottom: 1px solid black;
   text-align: center;
 }
 
-
-.modal-box.outer .inner-buttons{
+.modal-box.outer .inner-buttons {
   position: absolute;
   bottom: 0;
   padding-left: 30%;
-  padding-bottom:  1.5em;
+  padding-bottom: 1.5em;
 }
 
-.modal-box.outer .inner-buttons button{
-  margin-right:  1em;
+.modal-box.outer .inner-buttons button {
+  margin-right: 1em;
+}
+
+#favMovies {
+  margin-left: 30px;
+  margin-bottom: 0px;
+  display: flex;
+  font-family: "Agency FB";
+  font-size: 40px;
+  color: rgba(10, 14, 85, 0.8);
 }
 
 #kenzaMovieLi {
-  background: rgb(230,237,243);
-  padding: 20px;
+  display: flex;
+  font-family: "FreeMono";
+  font-size: 20px;
+  color: black;
 }
 
 #kenzaMovieUl {
-  background: #ffc72f;
-  padding: 20px;
+  border-left: 20px solid #0a0e55;
+  background-color: #ebe8df;
+  list-style-type: none;
+  padding: 10px 20px;
 }
 
+.div1 {
+  margin: 20px;
+}
 
+.ul1 {
+  list-style-type: none;
+  width: 700px;
+  font: 200 15px/1.5 Lucida Console , serif;
+  color: rgba(10, 14, 85, 0.8);
+}
 
+.title {
+  font: bold 20px/1.5 Lucida Console, sans-serif;
+  color: rgba(10, 14, 85, 0.8);
+}
 
+.li1 img {
+  float: left;
+  margin: 0 15px 0 0;
+}
 
+.li1 p {
+  font: 200 15px/1.5 Helvetica, Verdana , serif;
+  color: rgba(10, 14, 85, 0.8);
+}
+
+.li1 {
+  padding: 10px;
+  overflow: auto;
+}
+
+.li1 span{
+  font: bold 15px/1.5 Helvetica, Verdana, sans-serif;
+  color: rgba(10, 14, 85, 0.8);
+}
+
+li:hover {
+  background: #eee;
+  cursor: pointer;
+}
 
 
 

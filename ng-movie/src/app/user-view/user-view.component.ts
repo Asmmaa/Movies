@@ -2,7 +2,8 @@ import {Component, OnInit} from '@angular/core';
 import {User} from "../model/user";
 import {DataService} from "../dataservice.service";
 import {Movie} from "../model/movie";
-import {objectify} from "tslint/lib/utils";
+import {Infos} from "../model/infos";
+
 
 @Component({
   selector: 'app-user-view',
@@ -11,30 +12,42 @@ import {objectify} from "tslint/lib/utils";
 })
 export class UserViewComponent implements OnInit {
 
-  friends: User[] = [];
   users: User[];
   fakeLogin: string = 'Sakura';
   currentUser: User = new User();
   foundMovies: Movie[] = [];
-  createdMovie = new Movie();
   foundMovie = new Movie();
   hoverEdit: boolean;
   popupEdit: boolean;
-  movies: Movie[] = [];
   selectedMovie: Movie = new Movie();
   selectedFriend: User;
-  movieInfo: Movie = new Movie();
   movieTitleInput: string;
 
   constructor(public dataservice: DataService) {
 
-    dataservice.fetchUsers()
+    dataservice.fetchDBUsers()
       .then(users => {
         this.users = users
         this.currentUser = users.find(user => user.pseudo === this.fakeLogin)
+        console.log(this.currentUser)
       })
-      .then(() => this.details(this.currentUser))
-      .then(() => this.displayMovie(this.currentUser))
+      .then(() => this.getDBUserFriends(this.currentUser))
+      .then(() => {
+          this.getDBUserMovies(this.currentUser)
+            .then(movies => {
+                movies.forEach(movie => {
+                    console.log('fetching infos for ', movie.title)
+                    this.getMovieInfos(movie)
+                      .then(infos => {
+                        movie.infos = infos
+                        this.currentUser.movies = movies;
+                      })
+                  }
+                )
+              }
+            )
+        }
+      )
   }
 
   ngOnInit() {
@@ -59,34 +72,68 @@ export class UserViewComponent implements OnInit {
     this.popupEdit = false
   }
 
+
   /* ******************  Dynamic Displays ************************ */
 
-  details(user: User) {
-    this.dataservice
-      .fetchFriends(user)
-      .then(friends => {
-        this.friends = friends
-      })
-  }
+  /* ******************  User methods ************************ */
 
-  details2(user: User) {
+  userDetail(user: User) {
     this.selectedFriend = user;
     this.currentUser = user;
-    this.dataservice
-      .fetchFriends(user)
-      .then(friends => {
-        this.friends = friends
-      })
-      .then(() => this.displayMovie(this.currentUser))
+    this.dataservice.fetchDBFriends(user)
+      .then(friends =>
+        this.currentUser.friends = friends)
+      .then(() => {
+          this.getDBUserMovies(user)
+            .then(movies => {
+                movies.forEach(movie => {
+                  console.log('fetching infos for ', movie.title)
+                  this.getMovieInfos(movie)
+                    .then(infos => {
+                      movie.infos = infos
+                      this.currentUser.movies = movies;
+                    })
+                })
+              }
+            )
+        }
+      )
   }
 
+  /* ******************  User methods ************************ */
+
+  /* ******************  DB gets ************************ */
+
+  getDBUserFriends(user: User) {
+    this.dataservice
+      .fetchDBFriends(user)
+      .then(friends => {
+        this.currentUser.friends = friends
+      })
+  }
+
+  getDBUserMovies(user: User): Promise<Movie[]> {
+    return this.dataservice
+      .fetchDBMovies(user)
+  }
+
+  /* ******************  DB gets ************************ */
+
+  /* ******************  OMDB gets ************************ */
   findOMDBMovies() {
-    return this.dataservice.fetchMoviesOMDB(this.movieTitleInput)
+    return this.dataservice.fetchOmdbMovies(this.movieTitleInput)
       .then(movs => this.foundMovies = (movs as any).Search)
       .then(movs => console.log('Found : ', movs))
       .catch(e => alert(e.message));
   }
 
+  getMovieInfos(movie: Movie): Promise<Infos> {
+    return this.dataservice.fetchOmdbInfos(movie.imDbId)
+  }
+
+  /* ******************  OMDB gets ************************ */
+
+  /* ******************  ADD methods ************************ */
   createMovie() {
     this.selectedMovie.user = this.currentUser;
     this.dataservice
@@ -95,25 +142,7 @@ export class UserViewComponent implements OnInit {
       .catch(e => alert(e.message));
   }
 
-  displayMovie(user: User) {
-    this.currentUser = user;
-    this.dataservice
-      .fetchFavoriteMovies(user)
-      .then(movies => {
-        this.movies = movies
-        console.log(movies)
-      })
-  }
-
-  displayInformation(movie: Movie) {
-    this.selectedMovie = movie;
-    console.log(movie.imDbId);
-    this.dataservice.fetchOMDBimDbId(movie.imDbId)
-      .then(info => this.movieInfo = info)
-      .then(info => console.log('Information : ', info))
-      .catch(e => alert(e.message));
-  }
-
+  /* ******************  ADD methods ************************ */
 }
 
 

@@ -6,10 +6,10 @@
 
     <span class="friendScroll" (click)="hoverIn()" role="button"
           title="friends">Friends</span>
-    <div *ngIf="hoverEdit">
-      <ul class="submenu" *ngFor="let friend of friends">
+    <div *ngIf="hoverEdit" id="listF">
+      <ul class="submenu" *ngFor="let friend of currentUser.friends">
         <li>
-          <span (click)="details2(friend)">{{friend.pseudo}}</span>
+          <span (click)="userDetail(friend)">{{friend.pseudo}}</span>
         </li>
       </ul>
     </div>
@@ -18,24 +18,20 @@
 
   <!--  ************************** Display Movies **************************-->
 
-  <form Kenza>
-    <br>
-    My Favorites Movies:
-    <ul id="kenzaMovieUl">
-      <li *ngFor="let movie of movies" id="kenzaMovieLi"><a href="#info" (click)="displayInformation(movie)">
-        {{movie.title}}
-      </a>
+  <div class="div1">
+    <ul class="ul1">
+      <li class="li1" *ngFor="let movie of currentUser.movies">
+          <img src="{{movie.infos.Poster}}" style="width:200px;height:300px;"/>
+          <h3 class="title">{{movie.infos.Title}}</h3>
+        <span>Genre:</span> {{movie.infos.Genre}}<br>
+        <span>Year of release:</span> {{movie.infos.Year}}<br>
+        <span>Rated:</span> {{movie.infos.Rated}}<br>
+        <span>Language:</span> {{movie.infos.Language}}<br>
+        <span>Synopsis:</span>
+        <p>{{movie.infos.Plot}}</p>
       </li>
     </ul>
-    {{movieInfo.Year}} <br>
-    {{movieInfo.Rated}}<br>
-    {{movieInfo.Language}}<br>
-    {{movieInfo.Plot}}<br>
-    {{movieInfo.Genre}}<br>
-    <img src="{{ movieInfo.Poster}}">
-    <!--  <img src = {{ movieInfo.Poster}}>-->
-  </form>
-
+  </div>
   <!--  ****************************** Display Movies **************************-->
 
   <!--  ********************************* Add forms ****************************-->

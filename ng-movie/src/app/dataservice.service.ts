@@ -2,6 +2,7 @@ import {Injectable} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {User} from "./model/user";
 import {Movie} from "./model/movie";
+import {Infos} from "./model/infos";
 
 @Injectable()
 export class DataService {
@@ -9,7 +10,7 @@ export class DataService {
   constructor(public http: HttpClient) {
   }
 
-  fetchUsers(): Promise<User[]> {
+  fetchDBUsers(): Promise<User[]> {
     let url = ('http://10.31.1.30:8080/movies/api/users/');
     return this.http
       .get(url)
@@ -19,7 +20,7 @@ export class DataService {
       })
   }
 
-  fetchFriends(user: User): Promise<User[]> {
+  fetchDBFriends(user: User): Promise<User[]> {
     let url = ('http://10.31.1.30:8080/movies/api/users/' + user.pseudo);
     return this.http
       .get(url)
@@ -29,7 +30,17 @@ export class DataService {
       })
   }
 
-  fetchMoviesOMDB(extract: string): Promise<Movie[]> {
+  fetchDBMovies(user: User): Promise<Movie[]> {
+    const url = ('http://10.31.1.30:8080/movies/api/fav_movies/' + user.id);
+    return this.http
+      .get(url)
+      .toPromise()
+      .then(data => {
+        return data as Movie[];
+      });
+  }
+
+  fetchOmdbMovies(extract: string): Promise<Movie[]> {
     return this.http
       .get('http://www.omdbapi.com/?apikey=d424c139&s=' + extract)
       .toPromise()
@@ -38,13 +49,13 @@ export class DataService {
       });
   }
 
-  fetchFavoriteMovies(user: User): Promise<Movie[]> {
-    const url = ('http://10.31.1.30:8080/movies/api/fav_movies/' + user.id);
+  fetchOmdbInfos(movieId: string): Promise<Infos> {
+    console.log(movieId);
     return this.http
-      .get(url)
+      .get('http://www.omdbapi.com/?apikey=d424c139&type=movie&i=' + movieId)
       .toPromise()
       .then(data => {
-        return data as Movie[];
+        return data as Infos;
       });
   }
 
@@ -61,13 +72,5 @@ export class DataService {
       .then(console.log);
   }
 
-  fetchOMDBimDbId(movieId: string): Promise<Movie> {
-    console.log(movieId);
-    return this.http
-      .get('http://www.omdbapi.com/?apikey=d424c139&type=movie&i=' + movieId)
-      .toPromise()
-      .then(data => {
-        return data as Movie;
-      });
-  }
+
 }
