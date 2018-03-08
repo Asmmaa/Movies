@@ -118,6 +118,15 @@ export class UserViewComponent implements OnInit {
       .fetchDBMovies(user)
   }
 
+  findFriends() {
+    return this.dataservice.fetchDBUsers()
+      .then(users => this.foundFriends = users
+        .filter(filtered => filtered.pseudo !== this.currentUser.pseudo)
+        .filter(user => !this.currentUser.friends.map(f=>f.pseudo).includes(user.pseudo)  )
+      )
+      .then(console.log)
+  }
+
   /* ******************  DB gets ************************ */
 
   /* ******************  OMDB gets ************************ */
@@ -152,13 +161,6 @@ export class UserViewComponent implements OnInit {
   }
 
   /* ******************  ADD methods ************************ */
-
-  findFriends() {
-    return this.dataservice.fetchDBUsers()
-      .then(users => this.foundFriends = users.filter(filtered => filtered.pseudo !== this.currentUser.pseudo)
-  )
-  .then(console.log)
-  }
 
 }
 
