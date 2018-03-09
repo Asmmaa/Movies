@@ -60,12 +60,15 @@ export class DataService {
   }
 
   createFavMovie(movie: Movie) {
-    console.log(movie.user.pseudo)
-    let url = 'http://10.31.1.30:8080/movie/api/fav_movies';
+    let url = 'http://10.31.1.30:8080/movies/api/fav_movies';
     let dto = {
       imDbId: movie.imdbID,
       title: movie.Title,
-      user: movie.user
+      user: {
+        id: movie.user.id,
+        name: movie.user.name,
+        pseudo: movie.user.pseudo
+      }
     }
     return this.http.post(url, dto)
       .toPromise()

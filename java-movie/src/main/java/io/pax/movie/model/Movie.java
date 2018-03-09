@@ -4,5 +4,5 @@ public interface Movie {
     String getImDbId();
     int getId();
     String getTitle();
-    User getUser();
+    FilmFan getUser();
 }

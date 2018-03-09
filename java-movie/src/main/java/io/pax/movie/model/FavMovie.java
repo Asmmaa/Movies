@@ -37,7 +37,7 @@ public class FavMovie implements Movie {
     }
 
     @Override
-    public User getUser() {
+    public FilmFan getUser() {
         return this.user;
     }
 

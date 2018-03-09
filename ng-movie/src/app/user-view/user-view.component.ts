@@ -37,7 +37,6 @@ export class UserViewComponent implements OnInit {
           this.getDBUserMovies(this.currentUser)
             .then(movies => {
                 movies.forEach(movie => {
-                    console.log('fetching infos for ', movie.title)
                     this.getMovieInfos(movie)
                       .then(infos => {
                         movie.infos = infos
@@ -133,7 +132,6 @@ export class UserViewComponent implements OnInit {
   findOMDBMovies() {
     return this.dataservice.fetchOmdbMovies(this.movieTitleInput)
       .then(movs => this.foundMovies = (movs as any).Search)
-      .then(movs => console.log('Found : ', movs))
       .catch(e => alert(e.message));
   }
 
@@ -156,7 +154,6 @@ export class UserViewComponent implements OnInit {
     console.log(friend)
     this.dataservice
       .createFriends(this.currentUser, friend)
-      .then(console.log)
       .catch(e => alert(e.message));
   }
 

@@ -1,6 +1,7 @@
 package io.pax.movie.model;
 
 import javax.xml.bind.annotation.XmlRootElement;
+import java.util.List;
 
 @XmlRootElement
 public class FilmFan implements User{
@@ -8,9 +9,18 @@ public class FilmFan implements User{
     int id;
     String name;
     String pseudo;
+    List<User> friends;
 
     public FilmFan(){
 
+    }
+
+    public List<User> getFriends() {
+        return friends;
+    }
+
+    public void setFriends(List<User> friends) {
+        this.friends = friends;
     }
 
     public FilmFan(int id, String name, String pseudo){
