@@ -4,7 +4,7 @@
 
   <!--  ************************** Left Column **************************-->
   <section class="leftCol">
-    <h2 id="currentPseudo">{{currentUser.pseudo}}</h2>
+    <h2 *ngIf="currentUser.pseudo !== loggedUserPseudo" id="currentPseudo">{{currentUser.pseudo}}</h2>
 
     <span class="friendScroll" (click)="hoverIn()" role="button"
           title="friends">Friends</span>
@@ -14,6 +14,9 @@
           <span (click)="userDetail(friend)">{{friend.pseudo}}</span>
         </li>
       </ul>
+    </div>
+    <div *ngIf="currentUser.pseudo !== loggedUserPseudo">
+      <button type="button" (click)="ngOnInit()">Back to {{loggedUserPseudo}}'s profile</button>
     </div>
     <!--  ************************** Friend **************************-->
     <!--    <div>
@@ -26,7 +29,7 @@
           </button>
         </div>-->
 
-    <form>
+    <form *ngIf="currentUser.pseudo === loggedUserPseudo">
       <span (mouseover)="findFriends()"> Search friends :</span>
       <ul>
         <li *ngFor="let friend of foundFriends">
@@ -60,7 +63,7 @@
   <!--  ********************************* Add forms ****************************-->
   <!--  ************************** Movie **************************-->
 
-  <div class="add">
+  <div class="add" *ngIf="currentUser.pseudo === loggedUserPseudo" >
     <span class="search" > Search a Movie : </span>
     <input class="input" type="text" placeholder="Search..." name="Movie" [(ngModel)]="movieTitleInput" (click)="movieTitleInput=''"
                             (input)="findOMDBMovies()">

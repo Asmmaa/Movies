@@ -3,6 +3,7 @@ import {User} from "../model/user";
 import {DataService} from "../dataservice.service";
 import {Movie} from "../model/movie";
 import {Infos} from "../model/infos";
+import {AppComponent} from "../app.component";
 
 
 @Component({
@@ -13,7 +14,7 @@ import {Infos} from "../model/infos";
 export class UserViewComponent implements OnInit {
 
   users: User[];
-  fakeLogin: string = 'Sakura';
+  loggedUserPseudo = this.appComponent.loggedUser;
   currentUser: User = new User();
   foundMovies: Movie[] = [];
   foundMovie = new Movie();
@@ -24,12 +25,12 @@ export class UserViewComponent implements OnInit {
   movieTitleInput: string;
   foundFriends: User[] = [];
 
-  constructor(public dataservice: DataService) {
+  constructor(public dataservice: DataService, public appComponent: AppComponent) {
 
     dataservice.fetchDBUsers()
       .then(users => {
         this.users = users
-        this.currentUser = users.find(user => user.pseudo === this.fakeLogin)
+        this.currentUser = users.find(user => user.pseudo === this.loggedUserPseudo)
         console.log(this.currentUser)
       })
       .then(() => this.getDBUserFriends(this.currentUser))
@@ -51,6 +52,28 @@ export class UserViewComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.dataservice.fetchDBUsers()
+      .then(users => {
+        this.users = users
+        this.currentUser = users.find(user => user.pseudo === this.loggedUserPseudo)
+        console.log(this.currentUser)
+      })
+      .then(() => this.getDBUserFriends(this.currentUser))
+      .then(() => {
+          this.getDBUserMovies(this.currentUser)
+            .then(movies => {
+                movies.forEach(movie => {
+                    this.getMovieInfos(movie)
+                      .then(infos => {
+                        movie.infos = infos
+                        this.currentUser.movies = movies;
+                      })
+                  }
+                )
+              }
+            )
+        }
+      )
   }
 
   /* ******************  Dynamic Displays ************************ */
