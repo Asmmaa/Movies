@@ -7,34 +7,34 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MovieDao {
+public class FavMovDao {
 
     JdbcConnector connector = new JdbcConnector();
 
-   public int createMovie(String imDbId, String title, int userId) throws SQLException {
-       String query = "INSERT INTO movie (imdbid, title, user_id) VALUES (?,?,?)";
-       Connection conn = this.connector.getConnection();
-       PreparedStatement stmt = conn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
+    public int createMovie(String imDbId, String title, int userId) throws SQLException {
+        String query = "INSERT INTO favmovie (imdbid, title, user_id) VALUES (?,?,?)";
+        Connection conn = this.connector.getConnection();
+        PreparedStatement stmt = conn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
 
-       stmt.setString(1,imDbId);
-       stmt.setString(2,title);
-       stmt.setInt(3, userId);
+        stmt.setString(1,imDbId);
+        stmt.setString(2,title);
+        stmt.setInt(3, userId);
 
-       stmt.execute();
+        stmt.execute();
 
-       ResultSet key = stmt.getGeneratedKeys();
-       key.next();
+        ResultSet key = stmt.getGeneratedKeys();
+        key.next();
 
-       int id = key.getInt(1);
+        int id = key.getInt(1);
 
-       stmt.close();
-       conn.close();
+        stmt.close();
+        conn.close();
 
-       return id;
-   }
+        return id;
+    }
 
     public int createMovie2(String imDbId, String title, int userId) throws SQLException {
-        String query = "INSERT INTO movie (imdbid, title) VALUES (?,?)";
+        String query = "INSERT INTO favmovie (imdbid, title) VALUES (?,?)";
         Connection conn = this.connector.getConnection();
         PreparedStatement stmt = conn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
 
@@ -67,32 +67,32 @@ public class MovieDao {
 
     }
 
-   public List<Movie> findMovies() throws SQLException {
-       List<Movie> movies = new ArrayList<>();
+    public List<Movie> findMovies() throws SQLException {
+        List<Movie> movies = new ArrayList<>();
 
-       String query = "SELECT * FROM movie";
-       Connection conn = this.connector.getConnection();
-       PreparedStatement stmt = conn.prepareStatement(query);
-       ResultSet rs = stmt.executeQuery();
+        String query = "SELECT * FROM favmovie";
+        Connection conn = this.connector.getConnection();
+        PreparedStatement stmt = conn.prepareStatement(query);
+        ResultSet rs = stmt.executeQuery();
 
-       while (rs.next()) {
-           String title = rs.getString("title");
-           String imDbId = rs.getString("imdbId");
-           int id = rs.getInt("id");
-           int user_id = rs.getInt("user_id");
+        while (rs.next()) {
+            String title = rs.getString("title");
+            String imDbId = rs.getString("imdbId");
+            int id = rs.getInt("id");
+            //int user_id = rs.getInt("user_id");
 
-           movies.add(new FavMovie(id, title, imDbId));
-       }
-       rs.close();
-       stmt.close();
-       conn.close();
+            movies.add(new FavMovie(id, title, imDbId));
+        }
+        rs.close();
+        stmt.close();
+        conn.close();
 
-       return movies;
-   }
+        return movies;
+    }
 
     public List<Movie> findMoviesByUserId(int userId) throws SQLException {
 
-        String query = "SELECT * FROM movie WHERE user_id=?";
+        String query = "SELECT * FROM favmovie WHERE user_id=?";
         List<Movie> moviesId = new ArrayList<>();
 
         Connection conn = this.connector.getConnection();
@@ -116,7 +116,7 @@ public class MovieDao {
     }
 
     public void deleteUserFavMovie(String imDbId, int userId) throws SQLException {
-        String query = "DELETE FROM movie WHERE title=? AND user_id=?";
+        String query = "DELETE FROM favmovie WHERE title=? AND user_id=?";
 
         System.out.println(query);
 
@@ -132,8 +132,8 @@ public class MovieDao {
 
     public static void main(String[] args) throws SQLException {
         MovieDao dao = new MovieDao();
-       // System.out.println(dao.createMovie("1J5857", "Star Wars", 5));
-       dao.findMovies();
+        // System.out.println(dao.createMovie("1J5857", "Star Wars", 5));
+        dao.findMovies();
 //        dao.findMoviesByUserId(4);
         dao.createMovie2("flack","Marie râle", 1);
     }

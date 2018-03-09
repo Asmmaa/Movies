@@ -76,7 +76,6 @@ export class DataService {
   }
 
   createFriends(user: User, friend: User) {
-    console.log("OK");
     let url = 'http://10.31.1.30:8080/movies/api/users';
     let dto = [{
       pseudo: user.pseudo,
@@ -86,5 +85,18 @@ export class DataService {
     return this.http.post(url, dto)
       .toPromise()
   }
+
+/*  deleteMovie(movie: Movie) {
+    let url = 'http://10.31.1.30:8080/movies/api/fav_movies';
+    let dto = {
+      imDbId: movie.imdbID,
+      title: movie.Title,
+      user: {
+        id: movie.user.id,
+        name: movie.user.name,
+        pseudo: movie.user.pseudo
+      }
+    }
+  }*/
 
 }

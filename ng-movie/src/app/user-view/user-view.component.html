@@ -1,19 +1,21 @@
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+      integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 
 <main id="main">
 
   <!--  ************************** Left Column **************************-->
   <section class="leftCol">
     <h2 *ngIf="currentUser.pseudo !== loggedUserPseudo" id="currentPseudo">{{currentUser.pseudo}}</h2>
-
-    <span class="friendScroll" (click)="hoverIn()" role="button"
-          title="friends">Friends</span>
-    <div *ngIf="hoverEdit" id="listF">
-      <ul class="submenu" *ngFor="let friend of currentUser.friends">
-        <li>
-          <span (click)="userDetail(friend)">{{friend.pseudo}}</span>
-        </li>
-      </ul>
+    <div>
+    <span class="friendScroll" (click)="rollUnroll()" role="button"
+          title="friends">Follows  </span> <br> <br>
+      <div *ngIf="hoverEdit" id="listF">
+        <ul class="submenu" *ngFor="let friend of currentUser.friends">
+          <li>
+            <span (click)="userDetail(friend)">{{friend.pseudo}}</span>
+          </li>
+        </ul>
+      </div>
     </div>
     <div *ngIf="currentUser.pseudo !== loggedUserPseudo">
       <button type="button" (click)="ngOnInit()">Back to {{loggedUserPseudo}}'s profile</button>
@@ -29,48 +31,50 @@
           </button>
         </div>-->
 
-    <form *ngIf="currentUser.pseudo === loggedUserPseudo">
-      <span (mouseover)="findFriends()"> Search friends :</span>
-      <ul>
-        <li *ngFor="let friend of foundFriends">
-          <span class="friendchoice" (click)="addFriend(friend)">{{friend.pseudo}}</span>
+    <div *ngIf="currentUser.pseudo === loggedUserPseudo">
+      <span id="searchFriend" (mouseover)="findFriends()" (click)="hoverOut()"> Add followers</span>
+      <ul *ngIf="proposeFriends">
+        <li class="newFriendList" *ngFor="let friend of foundFriends" class="newFiendList">
+          <span class="friendchoice" (click)="friendPopupIn(friend)">{{friend.pseudo}}</span>
         </li>
       </ul>
-    </form>
+    </div>
+
   </section>
   <!--  ************************** Friend **************************-->
   <!--  ************************** Left Column **************************-->
 
   <!--  ************************** Display Movies **************************-->
 
-    <div class="div1" style= "overflow-y: scroll;">
-      <span id="favMov"> Favorite Movies </span>
-      <ul class="ul1" style= "overflow-y: scroll; height: 600px">
-        <li class="li1" *ngFor="let movie of currentUser.movies">
-            <img src="{{movie.infos?.Poster}}" style="width:200px;height:300px;"/>
-            <h3 class="title">{{movie.infos?.Title}}</h3>
-          <span>Genre:</span> {{movie.infos?.Genre}}<br>
-          <span>Year of release:</span> {{movie.infos?.Year}}<br>
-          <span>Rated:</span> {{movie.infos?.Rated}}<br>
-          <span>Language:</span> {{movie.infos?.Language}}<br>
-          <span>Synopsis:</span>
-          <p>{{movie.infos?.Plot}}</p>
-        </li>
-      </ul>
-    </div>
+  <div class="div1" style="overflow-y: scroll;">
+    <span id="favMov"> Favorite Movies </span>
+    <ul class="ul1" style="overflow-y: scroll; height: 600px">
+      <li class="li1" *ngFor="let movie of currentUser.movies">
+        <img src="{{movie.infos?.Poster}}" style="width:200px;height:300px;"/>
+        <h3 class="title">{{movie.infos?.Title}}</h3>
+        <span>Genre:</span> {{movie.infos?.Genre}}<br>
+        <span>Year of release:</span> {{movie.infos?.Year}}<br>
+        <span>Rated:</span> {{movie.infos?.Rated}}<br>
+        <span>Language:</span> {{movie.infos?.Language}}<br>
+        <span>Synopsis:</span>
+        <p>{{movie.infos?.Plot}}</p>
+      </li>
+    </ul>
+  </div>
   <!--  ****************************** Display Movies **************************-->
 
   <!--  ********************************* Add forms ****************************-->
   <!--  ************************** Movie **************************-->
 
-  <div class="add" *ngIf="currentUser.pseudo === loggedUserPseudo" >
-    <span class="search" > Search a Movie : </span>
-    <input class="input" type="text" placeholder="Search..." name="Movie" [(ngModel)]="movieTitleInput" (click)="movieTitleInput=''"
-                            (input)="findOMDBMovies()">
-    <div *ngFor="let movie of foundMovies" id = "listM1">
+  <div class="add" *ngIf="currentUser.pseudo === loggedUserPseudo">
+    <span class="search"> Search a Movie : </span><br>
+    <input class="input" type="text" placeholder="Search..." name="Movie" [(ngModel)]="movieTitleInput"
+           (click)="movieTitleInput=''"
+           (input)="findOMDBMovies()">
+    <div *ngFor="let movie of foundMovies" id="listM1">
       <ul>
-        <li id = "listM2">
-          <a href="#{{movie.imdbID}}" (click)="moviePopupIn(movie)" id = "movieLine">
+        <li id="listM2">
+          <a href="#{{movie.imdbID}}" (click)="moviePopupIn(movie)" id="movieLine">
             {{movie.Title}}
           </a>
         </li>
@@ -85,27 +89,51 @@
 
   <!-- Confirmation Popup to Like a movie -->
 
-  <div *ngIf="popupEdit" class="modal-box outer ">
+  <div *ngIf="popupMovie" class="modal-box outer ">
     <div class="modal-box inner">
       <header>
-        <h2>Ajout d'un film</h2>
+        <h2>Add a film</h2>
       </header>
       <div class="inner-content">
         <!--Message goes here-->
-        Etes vous sûr de vouloir ajouter :
+        Do you really want to add :
         <span class="filmDescription">{{selectedMovie.Title}}</span>
         ?
       </div>
       <div class="inner-buttons">
         <button class="btn btn-success" type="button" (click)="createMovie()">
-          Ajouter
+          Add
         </button>
         <button class="btn btn-warning" type="button" (click)="moviePopupOut()">
-          Annuler
+          Cancel
         </button>
       </div>
     </div>
   </div>
   <!-- Confirmation Popup to Like a movie -->
 
+  <!-- Confirmation Popup to Follow a Friend -->
+
+  <div *ngIf="popupFriend" class="modal-box outer ">
+    <div class="modal-box inner">
+      <header>
+        <h2>Follow a FanFilm</h2>
+      </header>
+      <div class="inner-content">
+        Do you really want to follow
+        <span>{{searchFriend.pseudo}}</span>
+        ?
+      </div>
+
+      <div class="inner-buttons">
+        <button class="btn btn-success" type="button" (click)="addFriend(searchFriend)" (click)="friendPopupOut()">
+          Add
+        </button>
+        <button class="btn btn-warning" type="button" (click)="friendPopupOut()">
+          Cancel
+        </button>
+      </div>
+    </div>
+  </div>
+  <!-- Confirmation Popup to Follow a Friend -->
 </main>

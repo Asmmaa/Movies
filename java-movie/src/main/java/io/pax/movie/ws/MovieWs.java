@@ -38,11 +38,11 @@ public List<Movie> getMovies(@PathParam("id") int userId) throws SQLException {
         try {
             int id = new MovieDao().createMovie(inDbId,title,userId);
             return new FavMovie(id, title, inDbId);
-
         } catch (SQLException e) {
             throw new ServerErrorException("Database error", 500);
         }
     }
+
 
 
 }

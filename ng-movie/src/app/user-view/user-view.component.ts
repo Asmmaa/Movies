@@ -18,12 +18,15 @@ export class UserViewComponent implements OnInit {
   currentUser: User = new User();
   foundMovies: Movie[] = [];
   foundMovie = new Movie();
-  hoverEdit: boolean;
-  popupEdit: boolean;
+  hoverEdit: boolean = false;
+  popupMovie: boolean;
+  popupFriend: boolean;
+  proposeFriends: boolean;
   selectedMovie: Movie = new Movie();
   selectedFriend: User;
   movieTitleInput: string;
   foundFriends: User[] = [];
+  searchFriend: User;
 
   constructor(public dataservice: DataService, public appComponent: AppComponent) {
 
@@ -78,21 +81,30 @@ export class UserViewComponent implements OnInit {
 
   /* ******************  Dynamic Displays ************************ */
 
-  hoverIn() {
-    this.hoverEdit = true;
+  rollUnroll() {
+    (this.hoverEdit === false) ? this.hoverEdit = true : this.hoverEdit = false;
   }
 
   hoverOut() {
-    this.hoverEdit = false;
+    this.proposeFriends = false;
   }
 
   moviePopupIn(movie: Movie) {
     this.selectedMovie = movie;
-    this.popupEdit = true
+    this.popupMovie = true
   }
 
   moviePopupOut() {
-    this.popupEdit = false
+    this.popupMovie = false
+  }
+
+  friendPopupIn(friend: User){
+    this.searchFriend = friend;
+    this.popupFriend = true;
+  }
+
+  friendPopupOut(){
+    this.popupFriend = false;
   }
 
 
@@ -141,10 +153,11 @@ export class UserViewComponent implements OnInit {
   }
 
   findFriends() {
+    this.proposeFriends = true;
     return this.dataservice.fetchDBUsers()
       .then(users => this.foundFriends = users
         .filter(filtered => filtered.pseudo !== this.currentUser.pseudo)
-        .filter(user => !this.currentUser.friends.map(f=>f.pseudo).includes(user.pseudo)  )
+        .filter(user => !this.currentUser.friends.map(f => f.pseudo).includes(user.pseudo))
       )
       .then(console.log)
   }
@@ -165,18 +178,26 @@ export class UserViewComponent implements OnInit {
   /* ******************  OMDB gets ************************ */
 
   /* ******************  ADD methods ************************ */
-  createMovie() {
+  createMovie(){
+
     this.selectedMovie.user = this.currentUser;
-    this.dataservice
+    return this.dataservice
       .createFavMovie(this.selectedMovie)
       .then(() => this.moviePopupOut())
-      .catch(e => alert(e.message));
+      .then(() => {
+        this.currentUser.movies.push(this.selectedMovie);
+        this.dataservice.fetchOmdbInfos(this.selectedMovie.imdbID).then( infos => {
+          let foundMovie = this.currentUser.movies.find(film => film.imdbID === this.selectedMovie.imdbID)
+          foundMovie.infos = infos;
+        });
+      })
   }
 
   addFriend(friend: User) {
     console.log(friend)
     this.dataservice
       .createFriends(this.currentUser, friend)
+      .then (()=> this.currentUser.friends.push(Object.assign({},this.searchFriend)))
       .catch(e => alert(e.message));
   }
 

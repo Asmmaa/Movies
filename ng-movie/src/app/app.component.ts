@@ -7,5 +7,5 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'Popcorn';
-  loggedUser: string = 'Sakura';
+  loggedUser: string = 'Feyribran';
 }

@@ -5,41 +5,45 @@
 
 /*************************Left colone : Friend list************************/
 
-.leftCol {
-  flex-direction: column;
-  display: flex;
-  background: rgba(38, 42, 84, 0.5);
-  color: white;
-/*  flex: 0 0 0;*/
-  border-radius: 16px;
-}
-
 #currentPseudo {
   margin-left: 30px;
   font-family: Lucida Console;
   font-size: 35px;
 }
 
+.leftCol {
+  flex-direction: column;
+  display: flex;
+  background: rgba(38, 42, 84, 0.5);
+  color: white;
+  border-radius: 16px;
+  padding-top: 25px;
+
+}
+
+
 .friendScroll {
-  margin-left: 45px;
-  margin-bottom: 15px;
+  margin-left: 20px;
+  margin-right: 90px;
   font-family: Lucida Console;
   background-color: #ebe8df;
   color: rgba(10, 14, 85, 0.8);
-  padding-left: 1%;
   border: 5px rgba(10, 14, 85, 0.8);
-  padding:  0em 1em;
+  padding: 0.5em 0.5em;
   border-radius: 16px;
   font-size: 24px;
   line-height: 2;
-  margin-right: 90px;
 }
 
 #listF{
   border-left: 20px solid #0a0e55;
   list-style-type: none;
   padding: 10px 20px;
-  margin-left: 10px;
+  margin-left: 35px;
+  margin-bottom: 50px;
+  margin-top: 10px;
+
+
 }
 
 .submenu {
@@ -48,9 +52,38 @@
   list-style-type:none;
 }
 
+
+
+
+.newFiendList{
+  font-family: Lucida Console;
+  border-left: 20px solid #0a0e55;
+  list-style-type: none;
+  padding: 10px 20px;
+  margin-left: 30px;
+
+}
+
+
+
+#searchFriend{
+  margin-top: 200%;
+  margin-left: 45px;
+  margin-right: 90px;
+  font-family: Lucida Console;
+  background-color: #ebe8df;
+  color: rgba(10, 14, 85, 0.8);
+  border: 5px rgba(10, 14, 85, 0.8);
+  padding: 0.5em 0.5em;
+  border-radius: 16px;
+  font-size: 24px;
+  line-height: 2;
+}
+
 /*************************Third colone : Add a Movie ************************/
 
 .add {
+
   font-size: 100%;
   margin-left: 50px;
   font-family: Lucida Console;
@@ -60,7 +93,15 @@
 }
 
 .search{
-  font-size: 150%;
+  font-family: Lucida Console;
+  background-color: #ebe8df;
+  color: rgba(10, 14, 85, 0.8);
+  border: 5px rgba(10, 14, 85, 0.8);
+  padding: 0.4em 0.4em;
+  border-radius: 16px;
+  font-size: 24px;
+  line-height: 2;
+  /*font-size: 150%;*/
   margin-bottom: 50px;
 }
 
@@ -173,7 +214,7 @@
 
 .div1::-webkit-scrollbar {
   display: flex;
-  width:10px;
+  width: auto;
   margin: 20px;
   overflow-y: scroll;
   flex-direction: column;
@@ -224,9 +265,6 @@ li:hover {
   cursor: pointer;
 }
 
-
-
-
-
+/*************************Left colone : Friend list************************/
 
 
